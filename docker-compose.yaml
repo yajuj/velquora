@@ -1,0 +1,25 @@
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: /apps/gateway/Dockerfile
+      target: developer
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - 80:80
+    command: pnpm start:dev gateway
+  telegram:
+    build:
+      context: .
+      dockerfile: /apps/telegram/Dockerfile
+      target: developer
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: pnpm start:dev telegram
+  queue:
+    image: rabbitmq
+    ports:
+      - 5672:5672
